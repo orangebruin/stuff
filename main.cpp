@@ -16,5 +16,7 @@ int main() {
   list.push_back(7);
 
   stuff::Sorting sort;
-  sort.insertionSort(list);
+//  sort.insertionSort(list);
+  sort.printList(list);
+  sort.mergeSort(list, 0, list.size());
 }
