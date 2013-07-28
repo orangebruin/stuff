@@ -139,13 +139,36 @@ public class Sorting {
 		return retVal;
 	}
 	
+	public int[] countingSort(int[] A, int k) {
+		int[] B = new int[A.length];
+		int[] C = new int[k];
+		int i, j;
+		
+		for (i = 0; i < k; i++)
+			C[i] = 0;
+		
+		for (j = 0; j < A.length; j++)
+			C[A[j]-1]++;
+		
+		for (i = 1; i < k; i++)
+			C[i] += C[i-1];
+		
+		for (j = A.length-1; j >= 0; j--) {
+			B[C[A[j]-1]-1] = A[j];
+			C[A[j]-1]--;
+		}
+		
+		return B;
+	}
+	
 	public static void main(String[] args) {
 		int[] list = {4, 6, 132, 56, 11, 33, 37, 1, 3, 7};
 		
 		Sorting sort = new Sorting();
 		//int[] sortedList = sort.mergeSort(list);
 		//int[] sportedList = sort.insertionSort(list);
-		int[] sortedList = sort.quickSort(list, 0, list.length-1);
+		//int[] sortedList = sort.quickSort(list, 0, list.length-1);
+		int[] sortedList = sort.countingSort(list, 132);
 		Sorting.printList(sortedList);
 	}
 }
