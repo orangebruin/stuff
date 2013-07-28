@@ -86,12 +86,66 @@ public class Sorting {
 		return retVal;
 	}
 	
+	private int partition(int[] A, int p, int r) {
+		int x = A[r], i = p - 1, temp;
+		
+		for (int j = p; j < r; j++) {
+			if (A[j] <= x) {
+				i++;
+				temp = A[i];
+				A[i] = A[j];
+				A[j] = temp;
+			}
+		}
+		
+		temp = A[i+1];
+		A[i+1] = A[r];
+		A[r] = temp;
+		
+		return (i+1);
+	}
+	
+	public int[] quickSort(int[] A, int p, int r) {
+		int[] retVal = A;
+		
+		if (p < r) {
+			int q = partition(A, p, r);
+			retVal = quickSort(retVal, p, q-1);
+			retVal = quickSort(retVal, q+1, r);
+		}
+		
+		return retVal;
+	}
+	
+	private int randomPartition(int[] A, int p, int r) {
+		int[] retVal = A;
+		int i = (int)Math.random() * r;
+		int temp = retVal[r];
+		retVal[r] = retVal[i];
+		retVal[i] = temp;
+		return partition(retVal, p, r);
+		
+	}
+	
+	public int[] randomQuickSort(int[] A, int p, int r) {
+		int[] retVal = A;
+		
+		if (p < r) {
+			int q = randomPartition(retVal, p, r);
+			retVal = randomQuickSort(retVal, p, q-1);
+			retVal = randomQuickSort(retVal, q+1, r);
+		}
+		
+		return retVal;
+	}
+	
 	public static void main(String[] args) {
 		int[] list = {4, 6, 132, 56, 11, 33, 37, 1, 3, 7};
 		
 		Sorting sort = new Sorting();
-		int[] sortedList = sort.mergeSort(list);
+		//int[] sortedList = sort.mergeSort(list);
 		//int[] sportedList = sort.insertionSort(list);
+		int[] sortedList = sort.quickSort(list, 0, list.length-1);
 		Sorting.printList(sortedList);
 	}
 }
